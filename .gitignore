@@ -1,0 +1,10 @@
+#Build files
+**/bin/
+**/obj/
+
+#Visual Studio Code
+.vscode/
+
+#User-specific files
+*.user
+*.suo
