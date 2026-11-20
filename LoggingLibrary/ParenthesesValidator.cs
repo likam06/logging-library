@@ -25,6 +25,7 @@ public class ParenthesesValidator
                 if (balance < 0)
                 {
                     logger.Log(LogLevel.ERROR, "Invalid input: closing parenthesis without a matching opening one. Input: " + input);
+                     logger.Log(LogLevel.INFO, "Validation result: invalid");
                     return false;
                 }
 
@@ -41,6 +42,7 @@ public class ParenthesesValidator
         else
         {
             logger.Log(LogLevel.ERROR, "Invalid input: unclosed opening parenthesis. Input: " + input);
+             logger.Log(LogLevel.INFO, "Validation result: invalid");
         }
 
         return result;
