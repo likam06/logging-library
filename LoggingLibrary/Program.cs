@@ -54,3 +54,23 @@ Logger testLogger = new Logger("TestLogger");
 
 testLogger.Log(LogLevel.WARN, "Warning message");
 testLogger.Log(LogLevel.ERROR, "Error message");
+//tests the formatter separately
+Console.WriteLine("\nTesting Formatter:");
+
+Formatter formatter = new Formatter();
+
+string formattedMessage = formatter.Format(
+    LogLevel.INFO,
+    "TestLogger",
+    "Hello from Formatter"
+);
+
+Console.WriteLine(formattedMessage);
+//tests a custom formatter format
+Formatter.SetFormat("[%l] %n: %m");
+
+Console.WriteLine(formatter.Format(
+    LogLevel.WARN,
+    "TestLogger",
+    "Custom format test"
+));
