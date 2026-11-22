@@ -123,3 +123,15 @@ bob.Assist();
 
 Console.WriteLine("\nAlice after Bob's purchase:");
 alice.Assist();
+//tests reading commands from a file
+Console.WriteLine("\nTesting CommandReader:");
+
+Logger readerLogger = new Logger("CommandReader");
+CommandReader reader = new CommandReader(readerLogger);
+
+string[] commands = reader.ReadCommands("LoggingLibrary/shop-monday.txt");
+
+for (int i = 0; i < commands.Length; i++)
+{
+    Console.WriteLine((i + 1) + ": " + commands[i]);
+}
