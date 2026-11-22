@@ -5,6 +5,8 @@ public class Display
     private int width;
     private int height;
     private float ppi;
+    //stores the logger for this display
+    private Logger logger;
 
     //initializes a display
     public Display(string model, int width, int height, float ppi)
@@ -13,6 +15,19 @@ public class Display
         this.width = width;
         this.height = height;
         this.ppi = ppi;
+        this.logger = new Logger("Display");
+        this.logger.Log(LogLevel.TRACE, model + " created");
+    }
+    //initializes a display with an existing logger
+    public Display(string model, int width, int height, float ppi, Logger logger)
+    {
+        this.model = model;
+        this.width = width;
+        this.height = height;
+        this.ppi = ppi;
+        this.logger = logger;
+
+        this.logger.Log(LogLevel.TRACE, model + " created");
     }
         //compares the physical size of two displays
     public string CompareSize(Display other)
@@ -22,11 +37,11 @@ public class Display
 
     if (size1 > size2)
     {
-        return $"{model} ({size1:F1}\") is bigger than {other.model} ({size2:F1}\")";
+        return $"{model} ({size1:F2}\") is bigger than {other.model} ({size2:F2}\")";
     }
     else if (size1 < size2)
     {
-        return $"{model} ({size1:F1}\") is smaller than {other.model} ({size2:F1}\")";
+        return $"{model} ({size1:F2}\") is smaller than {other.model} ({size2:F2}\")";
     }
     else
     {
