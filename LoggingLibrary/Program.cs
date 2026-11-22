@@ -131,7 +131,8 @@ Console.WriteLine("\nTesting CommandReader:");
 Logger readerLogger = new Logger("CommandReader");
 CommandReader reader = new CommandReader(readerLogger);
 
-string[] commands = reader.ReadCommands("LoggingLibrary/shop-monday.txt");
+string filePath = args.Length > 0 ? args[0] : "LoggingLibrary/shop-monday.txt";
+string[] commands = reader.ReadCommands(filePath);
 //stores managers and displays created from commands
 List<DisplayManager> shopManagers = new List<DisplayManager>();
 List<Display> shopDisplays = new List<Display>();
