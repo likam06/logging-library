@@ -26,7 +26,7 @@ foreach (string input in testCases)
 }
 
 //tests random messages
-Logger.SetFormat("[%t] [%l] [%n]: %r");
+Formatter.SetFormat("[%t] [%l] [%n]: %r");
 
 Console.WriteLine("\nTesting random messages:");
 validator.IsValid("()");
@@ -34,14 +34,14 @@ validator.IsValid("()");
 Console.WriteLine("\nTesting INFO level:");
 
 Logger.SetLevel(LogLevel.INFO);
-Logger.SetFormat("[%l] [%n]: %m");
+Formatter.SetFormat("[%l] [%n]: %m");
 
 validator.IsValid("()");
 //tests custom log format
 Console.WriteLine("\nTesting custom format:");
 
 Logger.SetLevel(LogLevel.TRACE);
-Logger.SetFormat("%l - %m");
+Formatter.SetFormat("%l - %m");
 
 validator.IsValid("()");
 
@@ -74,3 +74,14 @@ Console.WriteLine(formatter.Format(
     "TestLogger",
     "Custom format test"
 ));
+//tests aggregation with shared objects
+Console.WriteLine("\nTesting Aggregation:");
+
+Formatter sharedFormatter = new Formatter();
+ConsoleSink sharedSink = new ConsoleSink();
+
+Logger firstLogger = new Logger("First", sharedFormatter, sharedSink);
+Logger secondLogger = new Logger("Second", sharedFormatter, sharedSink);
+
+firstLogger.Log(LogLevel.INFO, "First logger message");
+secondLogger.Log(LogLevel.INFO, "Second logger message");
