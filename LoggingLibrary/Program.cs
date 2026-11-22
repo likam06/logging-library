@@ -95,3 +95,31 @@ Display samsung = new Display("Samsung-Odyssey-G5", 2560, 1440, 93.0f);
 Console.WriteLine(dell.CompareWithMonitor(lg));
 Console.WriteLine(lg.CompareWithMonitor(samsung));
 Console.WriteLine(samsung.CompareWithMonitor(dell));
+//tests display managers
+Console.WriteLine("\nTesting DisplayManager:");
+
+DisplayManager bob = new DisplayManager("Bob");
+DisplayManager alice = new DisplayManager("Alice");
+
+//assigns displays to managers
+bob.AssignDisplay(dell);
+bob.AssignDisplay(lg);
+bob.AssignDisplay(samsung);
+
+alice.AssignDisplay(dell);
+alice.AssignDisplay(samsung);
+
+//tests manager assistance
+Console.WriteLine("\nBob compares displays:");
+bob.Assist();
+
+//tests buying a display
+Console.WriteLine("\nBob buys Dell:");
+bob.BuyDisplay(dell);
+
+//tests the remaining displays
+Console.WriteLine("\nBob after purchase:");
+bob.Assist();
+
+Console.WriteLine("\nAlice after Bob's purchase:");
+alice.Assist();
