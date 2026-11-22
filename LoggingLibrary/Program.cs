@@ -85,3 +85,13 @@ Logger secondLogger = new Logger("Second", sharedFormatter, sharedSink);
 
 firstLogger.Log(LogLevel.INFO, "First logger message");
 secondLogger.Log(LogLevel.INFO, "Second logger message");
+//tests display comparison
+Console.WriteLine("\nTesting Display:");
+
+Display dell = new Display("Dell-U2723QE", 3840, 2160, 163.0f);
+Display lg = new Display("LG-27GP850", 2560, 1440, 108.8f);
+Display samsung = new Display("Samsung-Odyssey-G5", 2560, 1440, 93.0f);
+
+Console.WriteLine(dell.CompareWithMonitor(lg));
+Console.WriteLine(lg.CompareWithMonitor(samsung));
+Console.WriteLine(samsung.CompareWithMonitor(dell));
