@@ -1,0 +1,20 @@
+#Custom test for the display shop
+MANAGER Emma
+MANAGER Noah
+DISPLAY Test-Small 1920 1080 100.0
+DISPLAY Test-Large 3840 2160 160.0
+DISPLAY Test-Third 2560 1440 120.0
+ASSIGN Test-Small Emma
+ASSIGN Test-Large Emma
+ASSIGN Test-Small Noah
+ASSIGN Test-Third Emma
+COMPARE Test-Small Test-Large
+ASSIST Emma
+ASSIST Noah
+ASSIGN Test-Small Emma
+BUY Test-Small Emma
+ASSIGN Test-Large Noah
+ASSIST Noah
+BUY Test-Small Emma
+DISPLAY Broken 1920 1080 0
+UNKNOWN test
