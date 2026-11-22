@@ -26,7 +26,7 @@ foreach (string input in testCases)
 }
 
 //tests random messages
-Logger.SetFormat("[%t] [%l] [%n]: %r");
+Formatter.SetFormat("[%t] [%l] [%n]: %r");
 
 Console.WriteLine("\nTesting random messages:");
 validator.IsValid("()");
@@ -34,14 +34,14 @@ validator.IsValid("()");
 Console.WriteLine("\nTesting INFO level:");
 
 Logger.SetLevel(LogLevel.INFO);
-Logger.SetFormat("[%l] [%n]: %m");
+Formatter.SetFormat("[%l] [%n]: %m");
 
 validator.IsValid("()");
 //tests custom log format
 Console.WriteLine("\nTesting custom format:");
 
 Logger.SetLevel(LogLevel.TRACE);
-Logger.SetFormat("%l - %m");
+Formatter.SetFormat("%l - %m");
 
 validator.IsValid("()");
 
@@ -54,3 +54,72 @@ Logger testLogger = new Logger("TestLogger");
 
 testLogger.Log(LogLevel.WARN, "Warning message");
 testLogger.Log(LogLevel.ERROR, "Error message");
+//tests the formatter separately
+Console.WriteLine("\nTesting Formatter:");
+
+Formatter formatter = new Formatter();
+
+string formattedMessage = formatter.Format(
+    LogLevel.INFO,
+    "TestLogger",
+    "Hello from Formatter"
+);
+
+Console.WriteLine(formattedMessage);
+//tests a custom formatter format
+Formatter.SetFormat("[%l] %n: %m");
+
+Console.WriteLine(formatter.Format(
+    LogLevel.WARN,
+    "TestLogger",
+    "Custom format test"
+));
+//tests aggregation with shared objects
+Console.WriteLine("\nTesting Aggregation:");
+
+Formatter sharedFormatter = new Formatter();
+ConsoleSink sharedSink = new ConsoleSink();
+
+Logger firstLogger = new Logger("First", sharedFormatter, sharedSink);
+Logger secondLogger = new Logger("Second", sharedFormatter, sharedSink);
+
+firstLogger.Log(LogLevel.INFO, "First logger message");
+secondLogger.Log(LogLevel.INFO, "Second logger message");
+//tests display comparison
+Console.WriteLine("\nTesting Display:");
+
+Display dell = new Display("Dell-U2723QE", 3840, 2160, 163.0f);
+Display lg = new Display("LG-27GP850", 2560, 1440, 108.8f);
+Display samsung = new Display("Samsung-Odyssey-G5", 2560, 1440, 93.0f);
+
+Console.WriteLine(dell.CompareWithMonitor(lg));
+Console.WriteLine(lg.CompareWithMonitor(samsung));
+Console.WriteLine(samsung.CompareWithMonitor(dell));
+//tests display managers
+Console.WriteLine("\nTesting DisplayManager:");
+
+DisplayManager bob = new DisplayManager("Bob");
+DisplayManager alice = new DisplayManager("Alice");
+
+//assigns displays to managers
+bob.AssignDisplay(dell);
+bob.AssignDisplay(lg);
+bob.AssignDisplay(samsung);
+
+alice.AssignDisplay(dell);
+alice.AssignDisplay(samsung);
+
+//tests manager assistance
+Console.WriteLine("\nBob compares displays:");
+bob.Assist();
+
+//tests buying a display
+Console.WriteLine("\nBob buys Dell:");
+bob.BuyDisplay(dell);
+
+//tests the remaining displays
+Console.WriteLine("\nBob after purchase:");
+bob.Assist();
+
+Console.WriteLine("\nAlice after Bob's purchase:");
+alice.Assist();
