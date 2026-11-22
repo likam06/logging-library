@@ -1,3 +1,6 @@
+
+using System;
+
 public class Display
 {
     //stores display information
@@ -5,8 +8,15 @@ public class Display
     private int width;
     private int height;
     private float ppi;
+
     //stores the logger for this display
     private Logger logger;
+
+    //returns the display model
+    public string Model
+    {
+        get { return model; }
+    }
 
     //initializes a display
     public Display(string model, int width, int height, float ppi)
@@ -15,9 +25,11 @@ public class Display
         this.width = width;
         this.height = height;
         this.ppi = ppi;
+
         this.logger = new Logger("Display");
         this.logger.Log(LogLevel.TRACE, model + " created");
     }
+
     //initializes a display with an existing logger
     public Display(string model, int width, int height, float ppi, Logger logger)
     {
@@ -29,65 +41,68 @@ public class Display
 
         this.logger.Log(LogLevel.TRACE, model + " created");
     }
-        //compares the physical size of two displays
+
+    //compares the physical size of two displays
     public string CompareSize(Display other)
     {
         double size1 = Math.Sqrt(width * (double)width + height * (double)height) / ppi;
         double size2 = Math.Sqrt(other.width * (double)other.width + other.height * (double)other.height) / other.ppi;
 
-    if (size1 > size2)
-    {
-        return $"{model} ({size1:F2}\") is bigger than {other.model} ({size2:F2}\")";
+        if (size1 > size2)
+        {
+            return $"{model} ({size1:F2}\") is bigger than {other.model} ({size2:F2}\")";
+        }
+        else if (size1 < size2)
+        {
+            return $"{model} ({size1:F2}\") is smaller than {other.model} ({size2:F2}\")";
+        }
+        else
+        {
+            return $"{model} and {other.model} have the same screen size";
+        }
     }
-    else if (size1 < size2)
+
+    //compares the sharpness of two displays
+    public string CompareSharpness(Display other)
     {
-        return $"{model} ({size1:F2}\") is smaller than {other.model} ({size2:F2}\")";
+        if (ppi > other.ppi)
+        {
+            return $"{model} is sharper than {other.model}";
+        }
+        else if (ppi < other.ppi)
+        {
+            return $"{model} is less sharp than {other.model}";
+        }
+        else
+        {
+            return $"{model} and {other.model} have the same sharpness";
+        }
     }
-    else
+
+    //compares two displays and gives a final verdict
+    public string CompareWithMonitor(Display other)
     {
-        return $"{model} and {other.model} have the same screen size";
+        string sizeResult = CompareSize(other);
+        string sharpnessResult = CompareSharpness(other);
+
+        double size1 = Math.Sqrt(width * (double)width + height * (double)height) / ppi;
+        double size2 = Math.Sqrt(other.width * (double)other.width + other.height * (double)other.height) / other.ppi;
+
+        string verdict;
+
+        if (size1 > size2 && ppi > other.ppi)
+        {
+            verdict = model + " is both bigger and sharper.";
+        }
+        else if (size1 < size2 && ppi < other.ppi)
+        {
+            verdict = other.model + " is both bigger and sharper.";
+        }
+        else
+        {
+            verdict = "Neither display is better in both size and sharpness.";
+        }
+
+        return sizeResult + "\n" + sharpnessResult + "\nFinal verdict: " + verdict;
     }
 }
-//compares the sharpness of two displays
-public string CompareSharpness(Display other)
-{
-    if (ppi > other.ppi)
-    {
-        return $"{model} is sharper than {other.model}";
-    }
-    else if (ppi < other.ppi)
-    {
-        return $"{model} is less sharp than {other.model}";
-    }
-    else
-    {
-        return $"{model} and {other.model} have the same sharpness";
-    }
-}
-//compares two displays and gives a final verdict
-public string CompareWithMonitor(Display other)
-{
-    string sizeResult = CompareSize(other);
-    string sharpnessResult = CompareSharpness(other);
-
-    double size1 = Math.Sqrt(width * (double)width + height * (double)height) / ppi;
-    double size2 = Math.Sqrt(other.width * (double)other.width + other.height * (double)other.height) / other.ppi;
-
-    string verdict;
-
-    if (size1 > size2 && ppi > other.ppi)
-    {
-        verdict = model + " is both bigger and sharper.";
-    }
-    else if (size1 < size2 && ppi < other.ppi)
-    {
-        verdict = other.model + " is both bigger and sharper.";
-    }
-    else
-    {
-        verdict = "Neither display is better in both size and sharpness.";
-    }
-
-    return sizeResult + "\n" + sharpnessResult + "\nFinal verdict: " + verdict;
-}
-    }

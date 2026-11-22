@@ -13,6 +13,12 @@ public class DisplayManager
     //stores the manager logger
     private Logger logger;
 
+    //returns the manager name
+    public string Name
+    {
+        get { return name; }
+    }
+
     //initializes a manager
     public DisplayManager(string name)
     {
